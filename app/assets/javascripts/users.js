@@ -1,11 +1,11 @@
 /* global $, Stripe */
 // Use jQuery Document Ready
-$.on('turbolinks:load', function(){
+$(document).on('turbolinks:load', function(){
   var theForm = $('#pro_form');
-  var submitBtn = $('#form-submit-btn');
+  var submitBtn = $('#form-signup-btn');
   
   // Set Stripe public key
-  Stripe.setPublishableKey( $('meta[name="stripe-key"]').attr('content')); 
+  Stripe.setPublishableKey( $('meta[name="stripe-key"]').attr('content') ); 
   
   // When user clicks form submit btn
   submitBtn.click(function(event){
@@ -32,12 +32,12 @@ $.on('turbolinks:load', function(){
     if(!Stripe.card.validateCVC(cvcNum)) {
       error = true;
       alert('The CVC number appears to be invalid');  
-  
+    }
   // Validate Expiration Date.
     if(!Stripe.card.validateExpiry(expMonth, expYear)) {
       error = true;
       alert('The expiration date appears to be invalid');
-    
+    }
     if (error) {
     // If errors, don't send to Stripe.
     submitBtn.prop('disabled', false).val('Sign Up');
@@ -64,9 +64,4 @@ $.on('turbolinks:load', function(){
     // Submit form to rails app.
     theForm.get(0).submit();
   }
- 
-  
-  
-  
- 
 });
